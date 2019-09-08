@@ -5,7 +5,6 @@ jobs:
   build:
     docker:
       - image: circleci/python:3.6.1
-    working_directory: ~/repo
     steps:
       - checkout
       # Download and cache dependencies
@@ -15,3 +14,18 @@ jobs:
             python3 -m venv venv
             . venv/bin/activate
             pip install -v -r requirements.txt
+
+  build-two:
+    docker:
+      - image: circleci/ruby:2.4.1
+    steps:
+      - checkout
+      - run: echo "A more familiar hi"
+      - run: sleep 10
+
+workflows:
+  version: 2
+  build_and_two:
+    jobs:
+      - build
+      - build-two
